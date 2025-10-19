@@ -1,0 +1,163 @@
+{
+    "basicAttributes": {
+        "minWordLength": 1,
+        "maxWordLength": 3,
+        "langName": "Keregafa",
+        "langAuthor": "William Ellison",
+        "langAuthorEmail": "waellison@gmail.com",
+        "langWebsite": "https://keregafa-lang.org",
+        "configVersion": 1
+    },
+    "consonantFrequencies": {
+        "p": 0.011254,
+        "b": 0.010221,
+        "t": 0.015885,
+        "d": 0.009348,
+        "k": 0.008601,
+        "g": 0.006466,
+        "m": 0.03165,
+        "n": 0.155086,
+        "ng": 0.084592,
+        "f": 0.006078,
+        "v": 0.007957,
+        "s": 0.055831,
+        "z": 0.007395,
+        "sz": 0.014006,
+        "rsz": 0.006902,
+        "h": 0.012494,
+        "c": 0.040753,
+        "cz": 0.021398,
+        "rcz": 0.005417,
+        "j": 0.018274,
+        "l": 0.465259,
+        "w": 0.005133
+    },
+    "vowelFrequencies": {
+        "i": 0.125,
+        "y": 0.042,
+        "u": 0.125,
+        "e": 0.25,
+        "o": 0.291,
+        "a": 0.167
+    },
+    "phonemeClasses": {
+        "V": ["a", "e", "i", "o", "u", "y"],
+        "C": [
+               "p", "b", "t", "d", "k", "g",
+               "m", "n", "ng",
+               "f", "v", "s", "z", "sz", "rsz", "h",
+               "c", "cz", "rcz",
+               "j", "l", "w"
+             ],
+        "K": ["j", "w"],
+        "L": ["l"],
+        "B": ["p", "t", "k", "q"],
+        "D": ["b", "d", "g"],
+        "S": ["s", "sz", "rsz"],
+        "T": ["z", "cz", "rcz"],
+        "N": ["n", "ng", "m"]
+    },
+    "voicingRules": {
+        "k": "g",
+        "t": "d",
+        "p": "b",
+        "s": "z",
+        "f": "v",
+        "q": "j",
+        "g": "k",
+        "d": "t",
+        "b": "p",
+        "z": "s",
+        "v": "f",
+        "j": "q",
+        "sh": "zh",
+        "zh": "sh",
+        "ts": "dz",
+        "dz": "ts",
+        "ch": "dzs",
+        "dzs": "ch"
+    },
+    "syllableClasses": {
+        "I": {
+            "V": 0.05,
+            "CV": 0.55,
+            "DLV": 0.2,
+            "BLV": 0.2
+        },
+        "M": {
+            "CV": 0.8,
+            "DLV": 0.1,
+            "BLV": 0.1
+        },
+        "F": {
+            "CV": 0.6,
+            "CVN": 0.2,
+            "DLV": 0.075,
+            "DLVN": 0.025,
+            "BLV": 0.075,
+            "BLVN": 0.025
+        },
+        "V": {
+            "bu": 0.3,
+            "fu": 0.15,
+            "ku": 0.15,
+            "mu": 0.1,
+            "tsu": 0.3
+        },
+        "A": {
+            "di": 0.6,
+            "ni": 0.4
+        }
+    },
+    "wordTypes": {
+        "verb": {
+            "IV": 0.45,
+            "IMV": 0.45,
+            "IMMV": 0.075,
+            "IMMMV": 0.025
+        },
+        "noun": {
+            "F": 0.1,
+            "IF": 0.15,
+            "IMF": 0.275,
+            "IMMF": 0.2,
+            "IMMMF": 0.2,
+            "IMMMMF": 0.075
+        },
+        "adj": {
+            "IA": 0.45,
+            "IMA": 0.45,
+            "IMMA": 0.075,
+            "IMMMA": 0.025
+        },
+        "affix": {
+            "IM": 0.5,
+            "MF": 0.25,
+            "I": 0.25
+        },
+        "part": {
+            "IMF": 0.5,
+            "IF": 0.25,
+            "MF": 0.25
+        }
+    },
+    "replacementRules": {
+        "mustntHaveMultipleNasalsInARow": {
+            "(n|ng|m|nh)([aeiou])(n|ng|m|nh)([aeiou])": "\\1\\4"
+        }
+    },
+    "tuning": {
+        "geminateConsonantChance": 0,
+        "geminatableConsonants": [
+            "b", "c", "d"
+        ],
+        "geminateLastWordSound": false,
+        "lengthenVowelChance": 0,
+        "lengthenableVowels": [
+            "a", "e", "i", "o", "u"
+        ],
+        "lengthenOrthography": "double",
+        "reduplicateChance": 0,
+        "reduplicateWithInitialVoicing": true
+    }
+}

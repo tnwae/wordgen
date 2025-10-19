@@ -1,0 +1,250 @@
+{
+    "basicAttributes": {
+        "langName": "Keregafa",
+        "langAuthor": "William Ellison",
+        "langAuthorEmail": "waellison@gmail.com",
+        "langWebsite": "https://keregafa-lang.org",
+        "configVersion": 1
+    },
+    "tunings": {
+        "applySuffixToVerbForm": "gerund"
+    },
+    "suffixRules": {
+        "N": {
+            "N": "deleteLastChar",
+            "C": "appendLastVowel",
+            "V": "doNothing"
+        },
+        "V": {
+            "N": "doNothing",
+            "C": "doNothing",
+            "V": "appendLastConsonant"
+        },
+        "C": {
+            "N": "appendLastVowel",
+            "C": "appendLastVowel",
+            "V": "doNothing"
+        }
+    },
+    "prefixRules": {
+        "N": {
+            "N": "deleteLastChar",
+            "C": "deleteLastChar",
+            "V": "doNothing"
+        },
+        "V": {
+            "N": "doNothing",
+            "C": "doNothing",
+            "V": "deleteLastChar"
+        },
+        "C": {
+            "N": "deleteLastChar",
+            "C": "deleteLastChar",
+            "V": "doNothing"
+        }
+    },
+    "affixes": {
+        "001 N-N dual number": {
+            "suffix": "re"
+        },
+        "002 N-N plural number": {
+            "suffix": "ran"
+        },
+        "003 N-N masculine gender": {
+            "prefix": "mi"
+        },
+        "004 N-N feminine gender": {
+            "prefix": "re"
+        },
+        "005 N-N neuter gender": {
+            "prefix": "da"
+        },
+        "006 N-N negation": {
+            "prefix": "zhi"
+        },
+        "007 proper name": {
+            "prefix": "i"
+        },
+        "008 mnemonic name": {
+            "prefix": "e"
+        },
+        "009 V-V repetition": {
+            "prefix": "tiye"
+        },
+        "010 N-N/V-N back in return": {
+            "prefix": "rada"
+        },
+        "011 N-V revert to former state": {
+            "prefix": "quro",
+            "suffix": "pa"
+        },
+        "012 N-N mass noun": {
+            "suffix": "ate"
+        },
+        "014 N-N/V-N intrinsic aspect of root": {
+            "suffix": "som"
+        },
+        "015 N-N/V-N result of an action upon the root": {
+            "prefix": "qio",
+            "suffix": "som"
+        },
+        "016 N-V determine or measure state of root": {
+            "prefix": "a",
+            "suffix": "gu"
+        },
+        "017 N-V apply noun to patient": {
+            "prefix": "qiom",
+            "suffix": "gu"
+        },
+        "018 N-V add root to patient": {
+            "prefix": "ma",
+            "suffix": "gu"
+        },
+        "019 N-V remove root from patient": {
+            "prefix": "jaq",
+            "suffix": "gu"
+        },
+        "020 N-N place related to root": {
+            "suffix": "taba"
+        },
+        "021 N-N event related to root": {
+            "suffix": "kabiqa"
+        },
+        "022 N-N maximal polarity": {
+            "prefix": "jama"
+        },
+        "023 N-N high polarity": {
+            "prefix": "jana"
+        },
+        "025 N-N low polarity": {
+            "prefix": "japa"
+        },
+        "026 N-N minimal polarity": {
+            "prefix": "jata"
+        },
+        "027 N-N/V-V excessive": {
+            "prefix": "pirad"
+        },
+        "028 N-N insufficient": {
+            "prefix": "ibimi"
+        },
+        "029 N-N surplus": {
+            "prefix": "qudo"
+        },
+        "031 N-N almost, not quite": {
+            "prefix": "jate"
+        },
+        "032 N-N just, only, exclusively": {
+            "prefix": "qiba"
+        },
+        "033 N-N about, approximately, more or less": {
+            "prefix": "jini"
+        },
+        "034 N-N exactly": {
+            "prefix": "pucu"
+        },
+        "035 N-N especially; most": {
+            "prefix": "wiba"
+        },
+        "036 N-N especially; least": {
+            "prefix": "mihu"
+        },
+        "038 N-N half": {
+            "prefix": "gyaw"
+        },
+        "042 N-N deep color": {
+            "prefix": "reka"
+        },
+        "043 N-N light color": {
+            "prefix": "biru"
+        },
+        "053 N-Adj color": {
+            "suffix": "madu"
+        },
+        "054 V-V change of directionality": {
+            "prefix": "zaq"
+        },
+        "057 V-V purposive motion": {
+            "prefix": "ara"
+        },
+        "058 V-V chaosizing": {
+            "prefix": "sahe"
+        },
+        "059 V-V to perform the root to a greater degree": {
+            "prefix": "rada"
+        },
+        "060 V-V to request that the root be performed": {
+            "prefix": "qoda"
+        },
+        "063 N-N/V-N place with lots of the root": {
+            "prefix": "jini",
+            "suffix": "xama"
+        },
+        "064 N-N/V-V augmentative": {
+            "prefix": "xenhi"
+        },
+        "065 N-N/V-V diminutive": {
+            "prefix": "dime"
+        },
+        "066 N-N relationship by marriage": {
+            "prefix": "muga"
+        },
+        "067 N-N pejorative": {
+            "prefix": "idim"
+        },
+        "068 N-N {derived noun} is made from root": {
+            "prefix": "gije"
+        },
+        "069 N-N {derived noun} is a disease-causing agent": {
+            "prefix": "agaw"
+        },
+        "070 N-N {derived noun} is affected by disease": {
+            "prefix": "xaca"
+        },
+        "071 V-N {derived noun} does {verb}": {
+            "suffix": "paq"
+        },
+        "072 V-N {derived noun} is a group of people who do {verb}": {
+            "suffix": "bepaq"
+        },
+        "073 V-N {derived noun} is a person who does {verb} with someone else": {
+            "suffix": "kipaq"
+        },
+        "074 V-N {derived noun} is a person who does {verb} as an amateur": {
+            "prefix": "qim",
+            "suffix": "paq"
+        },
+        "075 V-N {derived noun} is a person who does {verb} as a professional": {
+            "prefix": "qabon",
+            "suffix": "paq"
+        },
+        "076 V-N {derived noun} is a place where {verb} is customarily carried out": {
+            "suffix": "kimem"
+        },
+        "077 N-N/V-N {derived noun} is payment received for {root}": {
+            "suffix": "xidi"
+        },
+        "078 V-N {derived noun} is a tool for performing {verb}": {
+            "prefix": "pupa",
+            "suffix": "c"
+        },
+        "079 V-N {derived noun} is a substance used for performing {verb}": {
+            "suffix": "rada"
+        },
+        "080 V-N {derived noun} is a substance to which {verb} is usually done": {
+            "suffix": "sorada"
+        },
+        "081 V-N {derived noun} is a body part/faculty used to do {verb}": {
+            "suffix": "tebes"
+        },
+        "082 V-N {derived noun} is the result of {verb}": {
+            "suffix": "xaqi"
+        },
+        "083 V-N {derived noun} is a style or method of doing {verb}": {
+            "suffix": "qiki"
+        },
+        "084 V-N {derived noun} is a state of being {verb}": {
+            "suffix": "som"
+        }
+    }
+}

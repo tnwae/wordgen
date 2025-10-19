@@ -1,0 +1,87 @@
+{
+    "basicAttributes": {
+        "langName": "Keregafa",
+        "langAuthor": "William Ellison",
+        "langAuthorEmail": "waellison@gmail.com",
+        "langWebsite": "https://keregafa-lang.org",
+        "configVersion": 1,
+        "verbEndings": [
+            "i"
+        ],
+        "converbRule": "auxiliaryWithParticiple",
+        "moodRule": "converb",
+        "tenseRule": "inflect"
+    },
+    "declensions": {
+        "nominative": "@",
+        
+        "ablative": "ne",
+        "accusative": "dle",
+        "antessive": "nga",
+        "benefactive": "tlu",
+        "circumessive": "czu",
+        "comitative": "plu",
+        "contingent": "sale",
+        "dative": "kle",
+        "genitive": "me",
+        "inessive": "gla",
+        "initiative": "li",
+        "intrative": "lu",
+        "lative": "ngo",
+        "pergressive": "tle",
+        "postessive": "dlo",
+        "privative": "ngola",
+        "similative": "la",
+        "subessive": "lono",
+        "superessive": "gli",
+        "terminative": "kla",
+        "vocative": "ple",
+        "translative": "wo"
+    },
+    "suffixRules": {
+        "N": {
+            "N": "deleteLastChar",
+            "C": "appendLastVowel",
+            "V": "doNothing"
+        },
+        "V": {
+            "N": "doNothing",
+            "C": "doNothing",
+            "V": "appendLastConsonant"
+        },
+        "C": {
+            "N": "appendLastVowel",
+            "C": "appendLastVowel",
+            "V": "doNothing"
+        }
+    },
+    "tenses": {
+        "i": {
+            "_className": "all verbs and adjectives",
+            "aorist": "iho",
+            "present": "iki",
+            "future": "ihe",
+            "gerund": "in",
+            "participle": "idi",
+            "infinitive": "i"
+        }
+    },
+    
+    "prefixRules": {
+        "N": {
+            "N": "deleteLastChar",
+            "C": "deleteLastChar",
+            "V": "doNothing"
+        },
+        "V": {
+            "N": "doNothing",
+            "C": "doNothing",
+            "V": "deleteLastChar"
+        },
+        "C": {
+            "N": "deleteLastChar",
+            "C": "deleteLastChar",
+            "V": "doNothing"
+        }
+    }
+}
