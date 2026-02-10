@@ -3,6 +3,15 @@
 Conlang utility class.  Includes a variety of helper functions for working with
 constructed languages as they are defined in various JSON rule tables.
 
+The ConlangData class is the main export of this module; it provides storage
+and utility functions for working with constructed languages and the words that
+they contain.  The name of the class is a slight misnomer as it does far more than
+merely serving as a container for data; it also provides methods for acting upon
+the data thus stored.
+
+The input JSON rule table format is documented in the file LanguageRulesTable.md
+in the root of the project repository.
+
 :author: William Ellison <waellison@gmail.com>
 :license: WTFPL
 """
@@ -11,6 +20,7 @@ import sys
 import json
 import re
 import unicodedata
+import itertools
 from random import random
 from typing import List, Union
 import numpy as np
@@ -65,6 +75,8 @@ class ConlangData:
                 self.replacement_rules = raw.get("replacementRules", None)
                 self.harmony_rules = raw.get("harmonyRules", None)
                 self.tunings = raw.get("tuning", None)
+                self.suffix_rules = raw.get("suffixRules", None)
+                self.prefix_rules = raw.get("prefixRules", None)
                 self.transcription = raw.get("transcriptionRules", None)
         except KeyError as ex:
             sys.stderr.write(f"missing required configuration key {ex}")
@@ -123,9 +135,26 @@ class ConlangData:
         :param syllable_count: The total number of syllables in the word.
         :return: The compiled character.
         """
+        freqtab = {}
+        vowel = False
+        
+        if ch == "V" or ch in self.basic_attributes.get("vowelClasses", []):
+            freqtab = self.vowel_freqtab
+            vowel = True
+        elif ch == "C" or ch in self.basic_attributes.get("consonantClasses", []):
+            freqtab = self.consonant_freqtab
+            vowel = False
+
         if ch.isupper():
-            phonemes_in_class = self.phoneme_classes[ch]
-            freqtab = self.vowel_freqtab if ch == "V" or ch == "X" else self.consonant_freqtab
+            if ch == "C":
+                consonants = list(self.consonant_freqtab.keys())
+                phonemes_in_class = consonants
+            elif ch == "V":
+                vowels = list(self.vowel_freqtab.keys())
+                phonemes_in_class = vowels
+            else:
+                phonemes_in_class = self.phoneme_classes[ch]
+
             compiled = ""
 
             while compiled not in phonemes_in_class:
@@ -135,61 +164,57 @@ class ConlangData:
 
             retval = compiled[0]
 
-            match ch:
-                case "V":
-                    lengthen_values = self._get_vowel_length_tunings()
+            if vowel:
+                lengthen_values = self._get_vowel_length_tunings()
 
-                    if lengthen_values and lengthen_values["lengthen"]:
-                        lengthenable_vowels = lengthen_values["vowels"]
-                        if (not lengthenable_vowels or \
-                               compiled[0] in lengthenable_vowels):
+                if lengthen_values and lengthen_values["lengthen"]:
+                    lengthenable_vowels = lengthen_values["vowels"]
+                    if (not lengthenable_vowels or \
+                            compiled[0] in lengthenable_vowels):
                             retval = lengthen_values["lengthenRule"](
-                                compiled[0])
-                case "X":
-                    # Don't geminate diphthongs.
-                    pass
-                case _:
-                    geminate_values = self._get_gemination_tunings()
-                    geminatable_consonants = geminate_values.get(
-                        "consonants", [])
-                    can_geminate = geminate_values.get("geminate", False)
+                            compiled[0])
+            else:
+                geminate_values = self._get_gemination_tunings()
+                geminatable_consonants = geminate_values.get(
+                    "consonants", [])
+                can_geminate = geminate_values.get("geminate", False)
 
-                    at_last_sound = syllable_index == syllable_count - 1 and \
-                                    phoneme_index == syllable_len - 1
+                at_last_sound = syllable_index == syllable_count - 1 and \
+                                phoneme_index == syllable_len - 1
 
-                    at_first_sound = syllable_index == 0 and \
-                                     phoneme_index == 0
+                at_first_sound = syllable_index == 0 and \
+                                    phoneme_index == 0
 
-                    geminate_last_sound = at_last_sound and \
-                                          geminate_values.get("geminateLastSound", False)
+                geminate_last_sound = at_last_sound and \
+                                        geminate_values.get("geminateLastSound", False)
 
-                    geminate_first_sound = at_first_sound and \
-                                           geminate_values.get("geminateFirstSound", False)
+                geminate_first_sound = at_first_sound and \
+                                        geminate_values.get("geminateFirstSound", False)
 
-                    can_geminate_last_sound = (
-                        at_last_sound
-                        and geminate_last_sound) or not at_last_sound
-                    can_geminate_first_sound = (
-                        at_first_sound
-                        and geminate_first_sound) or not at_first_sound
+                can_geminate_last_sound = (
+                    at_last_sound
+                    and geminate_last_sound) or not at_last_sound
+                can_geminate_first_sound = (
+                    at_first_sound
+                    and geminate_first_sound) or not at_first_sound
 
-                    if geminatable_consonants:
-                        if compiled[0] in geminatable_consonants:
-                            phoneme = compiled[0]
-                        else:
-                            phoneme = None
-                    else:
+                if geminatable_consonants:
+                    if compiled[0] in geminatable_consonants:
                         phoneme = compiled[0]
+                    else:
+                        phoneme = None
+                else:
+                    phoneme = compiled[0]
 
-                    # Geminate the consonant if we are allowed to:
-                    # - If the RNG says we can, and
-                    # - If the consonant is in the gemination list, and
-                    # - If the last sound rule is satisfied (either we are not
-                    #   at the last sound of the word, or we are and we are
-                    #   allowed to geminate it)
-                    if phoneme and can_geminate and \
-                       (can_geminate_first_sound and can_geminate_last_sound):
-                        retval *= 2
+                # Geminate the consonant if we are allowed to:
+                # - If the RNG says we can, and
+                # - If the consonant is in the gemination list, and
+                # - If the last sound rule is satisfied (either we are not
+                #   at the last sound of the word, or we are and we are
+                #   allowed to geminate it)
+                if phoneme and can_geminate and \
+                    (can_geminate_first_sound and can_geminate_last_sound):
+                    retval *= 2
 
             return retval
         else:
@@ -263,18 +288,20 @@ class ConlangData:
         Reduplicate the passed word and return the result.
 
         :param word: The word to reduplicate.
+        :return: The reduplicated word as a list of characters, or None if
+            reduplication is not to be performed.
         """
         reduplicate_tunings = self._get_reduplicate_tunings()
 
         if reduplicate_tunings and reduplicate_tunings["reduplicate"] \
-                              and len(word) < 6:
+                               and len(word) < 6:
             reduplicated = word[:] * 2
 
             # de/voice the first consonant of the reduplicated root
             # (e.g. tutu => tudu) if the tunings say to do so - this is
             # like Japanese rendaku
             if reduplicate_tunings["initialVoice"]:
-                reduplicated[len(word)] = self.get_voicing(
+                reduplicated[len(word)] = self.voice_consonant(
                     reduplicated[len(word)])
             return reduplicated
 
@@ -287,15 +314,16 @@ class ConlangData:
         :param ch: The character to check.
         :return: True if the character is a vowel, False otherwise.
         """
-        # FIXME Gross hack to allow for multiple vowel classes - needed
-        # in my Sai-kam-nam project to allow for diphthongs as their own
-        # vowel class (for finer control over possible syllable structures)
-        if ch in self.phoneme_classes["V"]:
-            return True
-        elif "X" in self.phoneme_classes.keys():
-            return ch in self.phoneme_classes["X"]
-        else:
-            return False
+        vowel_classes = [klass for klass in self.basic_attributes.get("vowelClasses", [])]
+        if not vowel_classes:
+            vowel_classes = ["V"]
+        
+        for klass in vowel_classes:
+            vowel_class = self.phoneme_classes.get(klass, [])
+            if ch in vowel_class:
+                return True
+
+        return False                
 
     def is_consonant(self, ch: str) -> bool:
         """
@@ -304,17 +332,35 @@ class ConlangData:
         :param ch: The character to check.
         :return: True if the character is a consonant, False otherwise.
         """
-        return ch in self.phonemes and not self.is_vowel(ch)
-
-    def get_voicing(self, ch: str) -> str:
-        """
-        Get the voicing counterpart for a consonant, if one exists.
+        consonant_classes = [klass for klass in self.basic_attributes.get("consonantClasses", [])]
+        if not consonant_classes:
+            consonant_classes = ["C"]
         
-        :param ch: The consonant to get the voicing counterpart for.
-        :return: The voicing counterpart of the consonant, or the original
-            consonant if it lacks a voicing counterpart.
+        for klass in consonant_classes:
+            if ch in self.phoneme_classes.get(klass, []):
+                return True
+
+        return False
+    
+    def voice_consonant(self, ch: str) -> str:
         """
-        return self.voicing_rules.get(ch) or ch
+        Voice a voiceless consonant if it has a voicing counterpart.
+        :param ch: The consonant to voice.
+        :return: The voiced counterpart of the consonant, or the original
+            consonant if it lacks a voicing counterpart.
+        """ 
+        return self.voicing_rules.get(ch, ch)
+
+    def devoice_consonant(self, ch: str) -> str:
+        """
+        Devoice a voiced consonant if it has a voiceless counterpart.
+        
+        :param ch: The consonant to devoice.
+        :return: The voiceless counterpart of the consonant, or the original
+            consonant if it lacks a voiceless counterpart.
+        """
+        reversed_voicing = {v: k for k, v in self.voicing_rules.items()}
+        return reversed_voicing.get(ch, ch)
 
     def compile_syllable_class(self, ch: str) -> str:
         """
@@ -440,7 +486,7 @@ class ConlangData:
     def do_nothing_for_inflection(self, word: List[str]) -> List[str]:
         return word
 
-    def get_char_class(self, ch: str) -> str:
+    def get_char_class(self, ch: str, generic: bool = False) -> str:
         """
         Get the character class of the passed character.
 
@@ -449,11 +495,17 @@ class ConlangData:
         :raise: KeyError if the the passed character does not refer to any
             specified classes.
         """
-        for klass, members in self.phoneme_classes.items():
-            if ch in members:
-                return klass
+        if generic:
+            if self.is_vowel(ch):
+                return "V"
+            elif self.is_consonant(ch):
+                return "C"
         else:
-            raise KeyError(f"invalid character {ch}")
+            for klass, members in self.phoneme_classes.items():
+                if ch in members:
+                    return klass
+            else:
+                raise KeyError(f"invalid character {ch}")
 
     def transcribe(self, word: str) -> str:
         """
