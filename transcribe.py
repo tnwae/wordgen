@@ -47,7 +47,7 @@ if __name__ == "__main__":
 
     with open(words, "r") as fh:
         for line in fh.readlines():
-            transcribed.append(transcribe(line[:-1]))
+            transcribed.append(transcribe(line.rstrip("\n")))
 
     if args.sort:
         transcribed.sort()

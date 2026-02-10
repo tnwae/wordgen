@@ -515,6 +515,8 @@ class ConlangData:
         :param word: The word to transcribe.
         :return: The word transcribed into the other writing system.
         """
+        if not self.transcription:
+            return word
         retval = word
         for source, dest in self.transcription.items():
             retval = re.sub(source, dest, retval)
@@ -528,6 +530,8 @@ class ConlangData:
         :param word: The word to detranscribe.
         :return: The word in the Latin script.
         """
+        if not self.transcription:
+            return word
         retval = word
         for source, dest in self.transcription.items():
             retval = re.sub(dest, source, retval)
