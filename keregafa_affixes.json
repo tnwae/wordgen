@@ -9,52 +9,18 @@
     "tunings": {
         "applySuffixToVerbForm": "gerund"
     },
-    "suffixRules": {
-        "N": {
-            "N": "deleteLastChar",
-            "C": "appendLastVowel",
-            "V": "doNothing"
-        },
-        "V": {
-            "N": "doNothing",
-            "C": "doNothing",
-            "V": "appendLastConsonant"
-        },
-        "C": {
-            "N": "appendLastVowel",
-            "C": "appendLastVowel",
-            "V": "doNothing"
-        }
-    },
-    "prefixRules": {
-        "N": {
-            "N": "deleteLastChar",
-            "C": "deleteLastChar",
-            "V": "doNothing"
-        },
-        "V": {
-            "N": "doNothing",
-            "C": "doNothing",
-            "V": "deleteLastChar"
-        },
-        "C": {
-            "N": "deleteLastChar",
-            "C": "deleteLastChar",
-            "V": "doNothing"
-        }
-    },
     "affixes": {
         "001 N-N dual number": {
-            "suffix": "re"
+            "suffix": "le"
         },
         "002 N-N plural number": {
-            "suffix": "ran"
+            "suffix": "lan"
         },
         "003 N-N masculine gender": {
             "prefix": "mi"
         },
         "004 N-N feminine gender": {
-            "prefix": "re"
+            "prefix": "le"
         },
         "005 N-N neuter gender": {
             "prefix": "da"
@@ -72,10 +38,10 @@
             "prefix": "tiye"
         },
         "010 N-N/V-N back in return": {
-            "prefix": "rada"
+            "prefix": "lada"
         },
         "011 N-V revert to former state": {
-            "prefix": "quro",
+            "prefix": "qulo",
             "suffix": "pa"
         },
         "012 N-N mass noun": {
@@ -123,7 +89,7 @@
             "prefix": "jata"
         },
         "027 N-N/V-V excessive": {
-            "prefix": "pirad"
+            "prefix": "pilad"
         },
         "028 N-N insufficient": {
             "prefix": "ibimi"
@@ -153,10 +119,10 @@
             "prefix": "gyaw"
         },
         "042 N-N deep color": {
-            "prefix": "reka"
+            "prefix": "leka"
         },
         "043 N-N light color": {
-            "prefix": "biru"
+            "prefix": "bilu"
         },
         "053 N-Adj color": {
             "suffix": "madu"
@@ -165,13 +131,13 @@
             "prefix": "zaq"
         },
         "057 V-V purposive motion": {
-            "prefix": "ara"
+            "prefix": "ala"
         },
         "058 V-V chaosizing": {
             "prefix": "sahe"
         },
         "059 V-V to perform the root to a greater degree": {
-            "prefix": "rada"
+            "prefix": "lada"
         },
         "060 V-V to request that the root be performed": {
             "prefix": "qoda"
@@ -226,13 +192,13 @@
         },
         "078 V-N {derived noun} is a tool for performing {verb}": {
             "prefix": "pupa",
-            "suffix": "c"
+            "suffix": "ts"
         },
         "079 V-N {derived noun} is a substance used for performing {verb}": {
-            "suffix": "rada"
+            "suffix": "lada"
         },
         "080 V-N {derived noun} is a substance to which {verb} is usually done": {
-            "suffix": "sorada"
+            "suffix": "solada"
         },
         "081 V-N {derived noun} is a body part/faculty used to do {verb}": {
             "suffix": "tebes"

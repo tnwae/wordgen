@@ -5,21 +5,23 @@
         "langAuthorEmail": "waellison@gmail.com",
         "langWebsite": "https://keregafa-lang.org",
         "configVersion": 1,
-        "verbEndings": [
+        "verbAffixes": [
             "i"
         ],
         "converbRule": "auxiliaryWithParticiple",
         "moodRule": "converb",
-        "tenseRule": "inflect"
+        "tenseRule": "inflect",
+        "caseRule": "inflect",
+        "declensionMethod": "suffix",
+        "conjugationMethod": "suffix"
     },
-    "declensions": {
+    "cases": {
         "nominative": "@",
-        
         "ablative": "ne",
         "accusative": "dle",
         "antessive": "nga",
         "benefactive": "tlu",
-        "circumessive": "czu",
+        "circumessive": "chu",
         "comitative": "plu",
         "contingent": "sale",
         "dative": "kle",
@@ -38,23 +40,6 @@
         "vocative": "ple",
         "translative": "wo"
     },
-    "suffixRules": {
-        "N": {
-            "N": "deleteLastChar",
-            "C": "appendLastVowel",
-            "V": "doNothing"
-        },
-        "V": {
-            "N": "doNothing",
-            "C": "doNothing",
-            "V": "appendLastConsonant"
-        },
-        "C": {
-            "N": "appendLastVowel",
-            "C": "appendLastVowel",
-            "V": "doNothing"
-        }
-    },
     "tenses": {
         "i": {
             "_className": "all verbs and adjectives",
@@ -64,24 +49,6 @@
             "gerund": "in",
             "participle": "idi",
             "infinitive": "i"
-        }
-    },
-    
-    "prefixRules": {
-        "N": {
-            "N": "deleteLastChar",
-            "C": "deleteLastChar",
-            "V": "doNothing"
-        },
-        "V": {
-            "N": "doNothing",
-            "C": "doNothing",
-            "V": "deleteLastChar"
-        },
-        "C": {
-            "N": "deleteLastChar",
-            "C": "deleteLastChar",
-            "V": "doNothing"
         }
     }
 }
