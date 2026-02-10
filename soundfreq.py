@@ -1,3 +1,15 @@
+"""
+Calculate phoneme frequencies from a list of words in a conlang.
+
+Usage: python soundfreq.py -i <input_file> -d <language_data_file> [-p]
+    - input_file: A text file with one word per line.
+    - language_data_file: A JSON file containing the conlang's phonological rules.
+    - -p: Optional flag to output percentages instead of raw counts.
+
+Author: William Ellison <tnwae@pm.me>
+License: WTFPLv2 (http://www.wtfpl.net/txt/copying/)
+"""
+
 import argparse
 import conlang_utils as cu
 import json

@@ -1,3 +1,13 @@
+"""
+Generate random words based on a simple syllable structure.
+By default, generates 1000 words with 1-5 syllables each.
+
+Usage: python permuter.py
+Author: William Ellison <tnwae@pm.me>
+License: WTFPLv2 (http://www.wtfpl.net/txt/copying/)
+Web: https://github.com/tnwae/conlang-utils
+"""
+
 import random
 
 vowels = ['a', 'e', 'i', 'o', 'u']

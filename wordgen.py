@@ -1,5 +1,66 @@
 #!/usr/bin/env python3
 
+"""
+Word generator for constructed languages.
+By default, generates words based on a user-provided conlang specification.
+
+What it does well:
+- Generates words based on user-provided conlang specifications.
+- Supports vowel harmony rules.
+- Supports reduplication rules.
+- Supports transcription to alternate scripts.
+- Supports text-replacement fine-tuning rules.
+- Through the language definition file, supports multiple word types (nouns,
+  verbs, adjectives, adverbs, particles) with different syllable structures.
+- It's fast!  Generating 100,000 words takes 13.51 seconds on my M4 MacBook Air.
+
+What it does poorly/not at all:
+- There is no GUI.  This is a command-line tool only.
+- Affixation is performed by a separate tool (affixator.py).
+- There is no support for generating words based on semantic fields
+  (e.g., "generate me 10 words that could mean 'water'").  This is purely a
+  phonological word generator and it is up to the user to decide what the
+  generated words mean.
+
+Known Issues:
+- There is no documentation apart from this docstring and the comments in the
+  code itself.  In particular, the format of the conlang specification JSON
+  file is not documented here.  See the example file `keregafa.json` for
+  reference until I write proper documentation.
+- There are no tests.  At all.
+- There is no error handling for malformed input files.
+- Some lazy assumptions are made about the input data that may not hold true
+  for all conlangs.
+- The code is messy and could use refactoring.
+- There are probably edge cases that will cause this to crash.  I haven't
+  encountered them yet, but that doesn't mean they aren't there.
+- I have wired in some preliminary support for JSON output, but I have not
+  tested it thoroughly, nor with any JSON consumers or as a component in a
+  Flask/FastAPI/mumble web service.  If you try this, let me know how it goes
+  and what the pieces look like when it breaks.
+
+Tested Platforms:
+- Python 3.14+ on macOS 26+ (Apple Silicon)
+
+It probably works on other Pythons on other OSes, but I haven't tested it.
+I don't think there are any features here that are specific to Python
+beyond 3.9, and there is nothing platform-specific aside from possibly
+needing to compile numpy for your platform.
+
+Usage: python wordgen.py -L <language> [-c <count>] [-t <template>] [-l <word_length>] [-x] [-f <format>] [-T <type>]
+    - language: Language rule file (default: keregafa)
+    - count: Number of words to generate (default: 1)
+    - template: Word template (randomly chosen if None)
+    - word_length: Number of syllables per word (0=random, default: 0
+    - -x: Optional flag to transcribe generated words in the specified alternate script
+    - format: Output format (text|json, default: text)
+    - type: Word type (noun|verb|adj|adv|part, default: noun)
+
+Author: William Ellison <tnwae@pm.me>
+License: WTFPLv2 (http://www.wtfpl.net/txt/copying/)
+Web: https://github.com/tnwae/wordgen    
+"""
+
 from typing import Union
 import re
 import json
@@ -10,7 +71,8 @@ import conlang_utils as cu
 
 class WordBuilder:
     """
-        Word builder for constructed languages.  Works from a user-provided input specification.
+        Word builder for constructed languages.  Works from a user-provided input specification
+        documented separately.
     """
 
 
@@ -116,10 +178,12 @@ class WordBuilder:
         # if there are text-replacement fine tunings (for orthographic
         # considerations, e.g.), apply those now.
         if self.conlang_data.replacement_rules:
-            for rule, filters in self.conlang_data.replacement_rules.items():
-                for filter, target in filters.items():
+            for _, filter in self.conlang_data.replacement_rules.items():
+                if filter.get("run", False):
+                    search = filter.get("search", "")
+                    replace = filter.get("replace", "")
                     for i in range(0, len(result)):
-                        result[i] = re.sub(filter, target, result[i])
+                        result[i] = re.sub(search, replace, result[i])
 
         # transcribe if necessary and then add to the output.
         if self.conlang_data.transcription and transcribe:

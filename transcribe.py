@@ -1,3 +1,17 @@
+"""
+Transcribe or detranscribe a list of words in a conlang.
+
+Usage: python transcribe.py -i <input_file> [-o] [-s] -d <language_data_file>
+    - input_file: A text file with one word per line.
+    - -o: Optional flag to transcribe to another alphabet (default is detranscribe)
+    - -s: Optional flag to sort the output words.
+    - language_data_file: A JSON file containing the conlang's phonological rules.
+
+Author: William Ellison <tnwae@pm.me>
+License: WTFPLv2 (http://www.wtfpl.net/txt/copying/)
+Web: https://github.com/tnwae/conlang-utils
+"""
+
 import argparse
 import conlang_utils as cu
 
