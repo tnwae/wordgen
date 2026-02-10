@@ -6,3 +6,7 @@ languages.  It is meant to work with JSON files like the ones furnished
 with this distribution.  Documentation will be forthcoming as time
 allows.
 
+Now partially aided and abetted by AI.  Parts of this program's codebase
+are implemented and/or refined by OpenAI's _Codex_ tool.  In particular,
+most of the tests are AI-generated.  I personally vet every line generated
+by Codex before it is committed to the repository.
